@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "employee"
+version = "0.1.0"
+description = ""
+authors = ["aminur93 <aminurrashid126@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+Django = "^4.1.1"
+mysqlclient = "^2.1.1"
+Pillow = "^9.2.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

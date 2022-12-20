@@ -1,0 +1,100 @@
+{% extends "layouts/master.html" %}
+
+{% block page %}
+    Employee Create
+{% endblock page %}
+    
+
+{% block css %}
+    
+{% endblock css %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div id="success_message"></div>
+            <div id="error_message"></div>
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">Employee Create</h3><hr>
+                </div>
+                <div class="card-body">
+                    <form action="" id="employee_post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Enter name">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" name="phone" class="form-control" id="phone" placeholder="Enter phone">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="file" name="image" class="form-control" id="image">
+                        </div>
+                        
+                        <div class="form-group">
+                            <a href="{% url 'employee' %}" class="btn btn-info">Back</a>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+
+            $("#employee_post").on("submit",function (e) {
+                e.preventDefault();
+
+                var formData = new FormData( $("#employee_post").get(0));
+
+                $.ajax({
+                    url : "{% url 'employee_store' %}",
+                    type: "post",
+                    data: formData,
+                    dataType: "json",
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function (data) {
+                        
+                        if(data.status_code == 201) {
+                            $('#success_message').html('<div class="alert alert-success">\n' +
+                                '<button class="close" data-dismiss="alert">×</button>\n' +
+                                '<strong>Success! '+data.message+'</strong> ' +
+                                '</div>');
+                        }else {
+                            $('#error_message').html('<div class="alert alert-danger">\n' +
+                                '<button class="close" data-dismiss="alert">×</button>\n' +
+                                '<strong>Success! '+data.error+'</strong> ' +
+                                '</div>');
+                        }
+
+                        $("form").trigger("reset");
+
+                        $('.form-group').find('.valids').hide();
+                    }
+                });
+            })
+        })
+    </script>
+{% endblock js %}
+    
+    
+    
